@@ -5,12 +5,23 @@ interface TransactionPayload {
   info: string;
 }
 
-export const createTransaction: Resolver<TransactionPayload> = async (
-  root,
-  { origin, destination, amount },
-  { prisma },
-  info
-) => {
+export const createTransaction: Resolver<TransactionPayload> = async (root, args, { prisma }, info) => {
+  const { origin, destination, amount } = args;
+
+  if (origin === destination) {
+    return {
+      success: false,
+      info: "Origem e destino devem ser diferentes."
+    };
+  }
+
+  if (amount <= 0) {
+    return {
+      success: false,
+      info: "Quantidade fornecida é inválida."
+    };
+  }
+
   const { data } = await prisma.request(`
       mutation CreateTransaction {
         executeRaw(query: "call create_transaction('${origin}', '${destination}', ${amount})")
@@ -21,9 +32,6 @@ export const createTransaction: Resolver<TransactionPayload> = async (
 
   return {
     success: code === 0,
-    info:
-      code === 0
-        ? "Transação realizada com sucesso."
-        : "Ops, ocorreu um erro. Verifique o saldo em sua carteira e tente novamente."
+    info: code === 0 ? "Transação realizada com sucesso." : "Ops, ocorreu um erro. Verifique o saldo em sua carteira e tente novamente."
   };
 };

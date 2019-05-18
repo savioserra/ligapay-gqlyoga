@@ -53,7 +53,7 @@ services:
       - "80:80"
     volumes:
       - /var/lib/pgadmin
-      - /pgadmin4/servers.json
+      - /pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: "ligapay"
       PGADMIN_DEFAULT_PASSWORD: "ligapay"
