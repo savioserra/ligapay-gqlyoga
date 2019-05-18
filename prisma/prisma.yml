@@ -1,0 +1,7 @@
+endpoint: http://prisma:4466/ligapay
+datamodel: datamodel.graphql
+
+hooks:
+  post-deploy:
+    - graphql get-schema --project db
+    - graphql codegen

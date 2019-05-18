@@ -1,0 +1,13 @@
+projects:
+  db:
+    schemaPath: prisma.graphql
+    extensions:
+      endpoints:
+        default: "http://prisma:4466/ligapay"
+      codegen:
+        - generator: prisma-binding
+          language: typescript
+          input: prisma.graphql
+
+          output:
+            binding: ../src/prisma.ts

@@ -1,0 +1,139 @@
+type User {
+  id: UUID! @id @unique
+  email: String! @unique
+  globoToken: String
+  password: String!
+
+  team: Team!
+  wallet: Wallet! @db(name: "wallet_id") @unique @relation(link: INLINE)
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  deleted: Boolean! @default(value: false)
+}
+
+type League {
+  id: UUID! @id @unique
+  name: String! @unique
+  adminTax: Int! @default(value: 0)
+  avatar: String
+  description: String
+  fee: Int! @default(value: 0)
+  limit: Int! @default(value: 20)
+
+  wallet: Wallet! @db(name: "wallet_id") @unique @relation(link: INLINE)
+  leagueType: LeagueType! @db(name: "league_type_id")
+  enrollments: [LeagueEnrollment]
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  deleted: Boolean! @default(value: false)
+}
+
+type LeagueType {
+  id: UUID! @id @unique
+  name: String! @unique
+  description: String
+
+  leagues: [League]
+
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime! @updatedAt
+  deleted: Boolean! @default(value: false)
+}
+
+type Score {
+  id: UUID! @id @unique
+  score: Int!
+
+  season: Season! @db(name: "season_id")
+  team: Team! @db(name: "team_id")
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Season {
+  id: UUID! @id @unique
+  name: String! @unique
+  description: String
+
+  scores: [Score]
+  leaguesEnrollments: [LeagueEnrollment]
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+"""
+An enrollment is a contract between a League, Team and Season.
+"""
+type TeamEnrollment {
+  id: UUID! @id @unique
+  fee: Int! @default(value: 0)
+
+  leagueEnrollment: LeagueEnrollment!
+    @db(name: "league_enrollment_id")
+    @relation(link: INLINE)
+
+  team: Team! @db(name: "team_id") @relation(link: INLINE)
+
+  updatedAt: DateTime @updatedAt
+  createdAt: DateTime @createdAt
+}
+
+type Team {
+  id: UUID! @id @unique
+  name: String! @unique
+  avatar: String
+
+  scores: [Score]
+  owner: User! @db(name: "user_id") @unique @relation(link: INLINE)
+  enrollments: [TeamEnrollment]
+
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt
+  deleted: Boolean! @default(value: false)
+}
+
+type Transaction {
+  id: UUID! @id @unique
+  amount: Int!
+
+  destination: Wallet!
+    @db(name: "wallet_destination_id")
+    @relation(
+      link: INLINE
+      name: "TransactionWalletDestinyToWalletTransactions"
+    )
+  origin: Wallet!
+    @db(name: "wallet_origin_id")
+    @relation(link: INLINE, name: "TransactionWalletOriginToWalletTransactions")
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Wallet {
+  id: UUID! @id @unique
+  amount: Int! @default(value: 0)
+  user: User
+  league: League
+  incomingTransactions: [Transaction]
+    @relation(name: "TransactionWalletDestinyToWalletTransactions")
+  outgoingTransactions: [Transaction]
+    @relation(name: "TransactionWalletOriginToWalletTransactions")
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type LeagueEnrollment {
+  id: UUID! @id @unique
+
+  league: League! @db(name: "league_id") @relation(link: INLINE)
+  season: Season! @db(name: "season_id") @relation(link: INLINE)
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
