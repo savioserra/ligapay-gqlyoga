@@ -18,6 +18,8 @@ services:
       APP_SECRET: "localsecret"
       PORT: 4000
       PRISMA_MANAGEMENT_API_SECRET: "localsecret"
+      DEBUG: "true"
+      TRACING: "true"
 
   prisma:
     image: "prismagraphql/prisma:1.32.2"
