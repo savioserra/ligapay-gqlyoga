@@ -1,5 +1,6 @@
-endpoint: http://prisma:4466/ligapay
+endpoint: ${env:PRISMA_SERVER_ENDPOINT}/${env:APP_NAME}/${env:STAGE}
 datamodel: datamodel.graphql
+secret: ${env:APP_SECRET}
 
 hooks:
   post-deploy:

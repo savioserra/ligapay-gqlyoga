@@ -5,7 +5,7 @@ interface TransactionPayload {
   info: string;
 }
 
-export const createTransaction: Resolver<TransactionPayload> = async (root, args, { prisma }, info) => {
+const createTransaction: Resolver<TransactionPayload> = async (root, args, { prisma }, info) => {
   const { origin, destination, amount } = args;
 
   if (origin === destination) {
@@ -28,10 +28,14 @@ export const createTransaction: Resolver<TransactionPayload> = async (root, args
       }
   `);
 
-  const code = !!data ? data.executeRaw : 1;
+  const code = (data && data.executeRaw) || 1;
 
   return {
     success: code === 0,
     info: code === 0 ? "Transação realizada com sucesso." : "Ops, ocorreu um erro. Verifique o saldo em sua carteira e tente novamente."
   };
+};
+
+export default {
+  createTransaction
 };

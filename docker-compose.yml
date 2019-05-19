@@ -7,11 +7,17 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - "./:/app"
+      - "./:/app/ligapay"
     depends_on:
       - prisma
     environment:
       NODE_ENV: "development"
+      PRISMA_SERVER_ENDPOINT: "http://prisma:4466"
+      APP_NAME: "ligapay"
+      STAGE: "develop"
+      APP_SECRET: "localsecret"
+      PORT: 4000
+      PRISMA_MANAGEMENT_API_SECRET: "localsecret"
 
   prisma:
     image: "prismagraphql/prisma:1.32.2"
@@ -24,6 +30,7 @@ services:
     environment:
       PRISMA_CONFIG: |
         port: 4466
+        managementApiSecret: localsecret
         databases:
           default:
             connector: postgres

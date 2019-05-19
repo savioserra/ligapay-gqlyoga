@@ -1,7 +1,7 @@
-import { users } from "./user";
+import user from "./user";
 
 const Query = {
-  users
+  ...user
 };
 
 export default Query;

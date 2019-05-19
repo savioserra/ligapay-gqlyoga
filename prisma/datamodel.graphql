@@ -72,9 +72,7 @@ type TeamEnrollment {
   id: UUID! @id @unique
   fee: Int! @default(value: 0)
 
-  leagueEnrollment: LeagueEnrollment!
-    @db(name: "league_enrollment_id")
-    @relation(link: INLINE)
+  leagueEnrollment: LeagueEnrollment! @db(name: "league_enrollment_id") @relation(link: INLINE)
 
   team: Team! @db(name: "team_id") @relation(link: INLINE)
 
@@ -85,6 +83,8 @@ type TeamEnrollment {
 type Team {
   id: UUID! @id @unique
   name: String! @unique
+  cartolaName: String!
+  cartolaSlug: String!
   avatar: String
 
   scores: [Score]
@@ -100,15 +100,8 @@ type Transaction {
   id: UUID! @id @unique
   amount: Int!
 
-  destination: Wallet!
-    @db(name: "wallet_destination_id")
-    @relation(
-      link: INLINE
-      name: "TransactionWalletDestinyToWalletTransactions"
-    )
-  origin: Wallet!
-    @db(name: "wallet_origin_id")
-    @relation(link: INLINE, name: "TransactionWalletOriginToWalletTransactions")
+  destination: Wallet! @db(name: "wallet_destination_id") @relation(link: INLINE, name: "TransactionWalletDestinyToWalletTransactions")
+  origin: Wallet! @db(name: "wallet_origin_id") @relation(link: INLINE, name: "TransactionWalletOriginToWalletTransactions")
 
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
@@ -119,10 +112,8 @@ type Wallet {
   amount: Int! @default(value: 0)
   user: User
   league: League
-  incomingTransactions: [Transaction]
-    @relation(name: "TransactionWalletDestinyToWalletTransactions")
-  outgoingTransactions: [Transaction]
-    @relation(name: "TransactionWalletOriginToWalletTransactions")
+  incomingTransactions: [Transaction] @relation(name: "TransactionWalletDestinyToWalletTransactions")
+  outgoingTransactions: [Transaction] @relation(name: "TransactionWalletOriginToWalletTransactions")
 
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

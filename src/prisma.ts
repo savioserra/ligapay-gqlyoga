@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo, GraphQLSchema } from 'graphql'
-import { Options } from 'graphql-binding'
 import { IResolvers } from 'graphql-tools/dist/Interfaces'
-import { BasePrismaOptions, makePrismaBindingClass } from 'prisma-binding'
+import { Options } from 'graphql-binding'
+import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 
 export interface Query {
     users: <T = Array<User | null>>(args: { where?: UserWhereInput | null, orderBy?: UserOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -141,7 +141,9 @@ delegateSubscription(fieldName: string, args?: {
 getAbstractResolvers(filterSchema?: GraphQLSchema | string): IResolvers;
 }
 
-export type BindingConstructor<T> = new(options: BasePrismaOptions) => T
+export interface BindingConstructor<T> {
+  new(options: BasePrismaOptions): T
+}
 /**
  * Type Defs
 */
@@ -2478,6 +2480,8 @@ type Subscription {
 type Team {
   id: UUID!
   name: String!
+  cartolaName: String!
+  cartolaSlug: String!
   avatar: String
   scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
   owner: User!
@@ -2500,6 +2504,8 @@ type TeamConnection {
 input TeamCreateInput {
   id: UUID
   name: String!
+  cartolaName: String!
+  cartolaSlug: String!
   avatar: String
   deleted: Boolean
   scores: ScoreCreateManyWithoutTeamInput
@@ -2525,6 +2531,8 @@ input TeamCreateOneWithoutScoresInput {
 input TeamCreateWithoutEnrollmentsInput {
   id: UUID
   name: String!
+  cartolaName: String!
+  cartolaSlug: String!
   avatar: String
   deleted: Boolean
   scores: ScoreCreateManyWithoutTeamInput
@@ -2534,6 +2542,8 @@ input TeamCreateWithoutEnrollmentsInput {
 input TeamCreateWithoutOwnerInput {
   id: UUID
   name: String!
+  cartolaName: String!
+  cartolaSlug: String!
   avatar: String
   deleted: Boolean
   scores: ScoreCreateManyWithoutTeamInput
@@ -2543,6 +2553,8 @@ input TeamCreateWithoutOwnerInput {
 input TeamCreateWithoutScoresInput {
   id: UUID
   name: String!
+  cartolaName: String!
+  cartolaSlug: String!
   avatar: String
   deleted: Boolean
   owner: UserCreateOneWithoutTeamInput!
@@ -2891,6 +2903,10 @@ enum TeamOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  cartolaName_ASC
+  cartolaName_DESC
+  cartolaSlug_ASC
+  cartolaSlug_DESC
   avatar_ASC
   avatar_DESC
   createdAt_ASC
@@ -2904,6 +2920,8 @@ enum TeamOrderByInput {
 type TeamPreviousValues {
   id: UUID!
   name: String!
+  cartolaName: String!
+  cartolaSlug: String!
   avatar: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -2949,6 +2967,8 @@ input TeamSubscriptionWhereInput {
 
 input TeamUpdateInput {
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar: String
   deleted: Boolean
   scores: ScoreUpdateManyWithoutTeamInput
@@ -2958,6 +2978,8 @@ input TeamUpdateInput {
 
 input TeamUpdateManyMutationInput {
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar: String
   deleted: Boolean
 }
@@ -2985,6 +3007,8 @@ input TeamUpdateOneRequiredWithoutScoresInput {
 
 input TeamUpdateWithoutEnrollmentsDataInput {
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar: String
   deleted: Boolean
   scores: ScoreUpdateManyWithoutTeamInput
@@ -2993,6 +3017,8 @@ input TeamUpdateWithoutEnrollmentsDataInput {
 
 input TeamUpdateWithoutOwnerDataInput {
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar: String
   deleted: Boolean
   scores: ScoreUpdateManyWithoutTeamInput
@@ -3001,6 +3027,8 @@ input TeamUpdateWithoutOwnerDataInput {
 
 input TeamUpdateWithoutScoresDataInput {
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar: String
   deleted: Boolean
   owner: UserUpdateOneRequiredWithoutTeamInput
@@ -3081,6 +3109,86 @@ input TeamWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  cartolaName: String
+
+  """All values that are not equal to given value."""
+  cartolaName_not: String
+
+  """All values that are contained in given list."""
+  cartolaName_in: [String!]
+
+  """All values that are not contained in given list."""
+  cartolaName_not_in: [String!]
+
+  """All values less than the given value."""
+  cartolaName_lt: String
+
+  """All values less than or equal the given value."""
+  cartolaName_lte: String
+
+  """All values greater than the given value."""
+  cartolaName_gt: String
+
+  """All values greater than or equal the given value."""
+  cartolaName_gte: String
+
+  """All values containing the given string."""
+  cartolaName_contains: String
+
+  """All values not containing the given string."""
+  cartolaName_not_contains: String
+
+  """All values starting with the given string."""
+  cartolaName_starts_with: String
+
+  """All values not starting with the given string."""
+  cartolaName_not_starts_with: String
+
+  """All values ending with the given string."""
+  cartolaName_ends_with: String
+
+  """All values not ending with the given string."""
+  cartolaName_not_ends_with: String
+  cartolaSlug: String
+
+  """All values that are not equal to given value."""
+  cartolaSlug_not: String
+
+  """All values that are contained in given list."""
+  cartolaSlug_in: [String!]
+
+  """All values that are not contained in given list."""
+  cartolaSlug_not_in: [String!]
+
+  """All values less than the given value."""
+  cartolaSlug_lt: String
+
+  """All values less than or equal the given value."""
+  cartolaSlug_lte: String
+
+  """All values greater than the given value."""
+  cartolaSlug_gt: String
+
+  """All values greater than or equal the given value."""
+  cartolaSlug_gte: String
+
+  """All values containing the given string."""
+  cartolaSlug_contains: String
+
+  """All values not containing the given string."""
+  cartolaSlug_not_contains: String
+
+  """All values starting with the given string."""
+  cartolaSlug_starts_with: String
+
+  """All values not starting with the given string."""
+  cartolaSlug_not_starts_with: String
+
+  """All values ending with the given string."""
+  cartolaSlug_ends_with: String
+
+  """All values not ending with the given string."""
+  cartolaSlug_not_ends_with: String
   avatar: String
 
   """All values that are not equal to given value."""
@@ -4360,6 +4468,10 @@ export type TeamOrderByInput =   'id_ASC' |
   'id_DESC' |
   'name_ASC' |
   'name_DESC' |
+  'cartolaName_ASC' |
+  'cartolaName_DESC' |
+  'cartolaSlug_ASC' |
+  'cartolaSlug_DESC' |
   'avatar_ASC' |
   'avatar_DESC' |
   'createdAt_ASC' |
@@ -5450,6 +5562,8 @@ export interface SeasonWhereUniqueInput {
 export interface TeamCreateInput {
   id?: UUID | null
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar?: String | null
   deleted?: Boolean | null
   scores?: ScoreCreateManyWithoutTeamInput | null
@@ -5475,6 +5589,8 @@ export interface TeamCreateOneWithoutScoresInput {
 export interface TeamCreateWithoutEnrollmentsInput {
   id?: UUID | null
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar?: String | null
   deleted?: Boolean | null
   scores?: ScoreCreateManyWithoutTeamInput | null
@@ -5484,6 +5600,8 @@ export interface TeamCreateWithoutEnrollmentsInput {
 export interface TeamCreateWithoutOwnerInput {
   id?: UUID | null
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar?: String | null
   deleted?: Boolean | null
   scores?: ScoreCreateManyWithoutTeamInput | null
@@ -5493,6 +5611,8 @@ export interface TeamCreateWithoutOwnerInput {
 export interface TeamCreateWithoutScoresInput {
   id?: UUID | null
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar?: String | null
   deleted?: Boolean | null
   owner: UserCreateOneWithoutTeamInput
@@ -5662,6 +5782,8 @@ export interface TeamSubscriptionWhereInput {
 
 export interface TeamUpdateInput {
   name?: String | null
+  cartolaName?: String | null
+  cartolaSlug?: String | null
   avatar?: String | null
   deleted?: Boolean | null
   scores?: ScoreUpdateManyWithoutTeamInput | null
@@ -5671,6 +5793,8 @@ export interface TeamUpdateInput {
 
 export interface TeamUpdateManyMutationInput {
   name?: String | null
+  cartolaName?: String | null
+  cartolaSlug?: String | null
   avatar?: String | null
   deleted?: Boolean | null
 }
@@ -5698,6 +5822,8 @@ export interface TeamUpdateOneRequiredWithoutScoresInput {
 
 export interface TeamUpdateWithoutEnrollmentsDataInput {
   name?: String | null
+  cartolaName?: String | null
+  cartolaSlug?: String | null
   avatar?: String | null
   deleted?: Boolean | null
   scores?: ScoreUpdateManyWithoutTeamInput | null
@@ -5706,6 +5832,8 @@ export interface TeamUpdateWithoutEnrollmentsDataInput {
 
 export interface TeamUpdateWithoutOwnerDataInput {
   name?: String | null
+  cartolaName?: String | null
+  cartolaSlug?: String | null
   avatar?: String | null
   deleted?: Boolean | null
   scores?: ScoreUpdateManyWithoutTeamInput | null
@@ -5714,6 +5842,8 @@ export interface TeamUpdateWithoutOwnerDataInput {
 
 export interface TeamUpdateWithoutScoresDataInput {
   name?: String | null
+  cartolaName?: String | null
+  cartolaSlug?: String | null
   avatar?: String | null
   deleted?: Boolean | null
   owner?: UserUpdateOneRequiredWithoutTeamInput | null
@@ -5757,6 +5887,34 @@ export interface TeamWhereInput {
   name_not_starts_with?: String | null
   name_ends_with?: String | null
   name_not_ends_with?: String | null
+  cartolaName?: String | null
+  cartolaName_not?: String | null
+  cartolaName_in?: String[] | String | null
+  cartolaName_not_in?: String[] | String | null
+  cartolaName_lt?: String | null
+  cartolaName_lte?: String | null
+  cartolaName_gt?: String | null
+  cartolaName_gte?: String | null
+  cartolaName_contains?: String | null
+  cartolaName_not_contains?: String | null
+  cartolaName_starts_with?: String | null
+  cartolaName_not_starts_with?: String | null
+  cartolaName_ends_with?: String | null
+  cartolaName_not_ends_with?: String | null
+  cartolaSlug?: String | null
+  cartolaSlug_not?: String | null
+  cartolaSlug_in?: String[] | String | null
+  cartolaSlug_not_in?: String[] | String | null
+  cartolaSlug_lt?: String | null
+  cartolaSlug_lte?: String | null
+  cartolaSlug_gt?: String | null
+  cartolaSlug_gte?: String | null
+  cartolaSlug_contains?: String | null
+  cartolaSlug_not_contains?: String | null
+  cartolaSlug_starts_with?: String | null
+  cartolaSlug_not_starts_with?: String | null
+  cartolaSlug_ends_with?: String | null
+  cartolaSlug_not_ends_with?: String | null
   avatar?: String | null
   avatar_not?: String | null
   avatar_in?: String[] | String | null
@@ -6444,7 +6602,7 @@ export interface League {
   limit: Int
   wallet: Wallet
   leagueType: LeagueType
-  enrollments?: LeagueEnrollment[] | null
+  enrollments?: Array<LeagueEnrollment> | null
   createdAt: DateTime
   updatedAt: DateTime
   deleted: Boolean
@@ -6505,7 +6663,7 @@ export interface LeagueEnrollmentPreviousValues {
 export interface LeagueEnrollmentSubscriptionPayload {
   mutation: MutationType
   node?: LeagueEnrollment | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: LeagueEnrollmentPreviousValues | null
 }
 
@@ -6525,7 +6683,7 @@ export interface LeaguePreviousValues {
 export interface LeagueSubscriptionPayload {
   mutation: MutationType
   node?: League | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: LeaguePreviousValues | null
 }
 
@@ -6533,7 +6691,7 @@ export interface LeagueType {
   id: UUID
   name: String
   description?: String | null
-  leagues?: League[] | null
+  leagues?: Array<League> | null
   createdAt?: DateTime | null
   updatedAt: DateTime
   deleted: Boolean
@@ -6570,7 +6728,7 @@ export interface LeagueTypePreviousValues {
 export interface LeagueTypeSubscriptionPayload {
   mutation: MutationType
   node?: LeagueType | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: LeagueTypePreviousValues | null
 }
 
@@ -6623,7 +6781,7 @@ export interface ScorePreviousValues {
 export interface ScoreSubscriptionPayload {
   mutation: MutationType
   node?: Score | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: ScorePreviousValues | null
 }
 
@@ -6631,8 +6789,8 @@ export interface Season {
   id: UUID
   name: String
   description?: String | null
-  scores?: Score[] | null
-  leaguesEnrollments?: LeagueEnrollment[] | null
+  scores?: Array<Score> | null
+  leaguesEnrollments?: Array<LeagueEnrollment> | null
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -6667,17 +6825,19 @@ export interface SeasonPreviousValues {
 export interface SeasonSubscriptionPayload {
   mutation: MutationType
   node?: Season | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: SeasonPreviousValues | null
 }
 
 export interface Team {
   id: UUID
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar?: String | null
-  scores?: Score[] | null
+  scores?: Array<Score> | null
   owner: User
-  enrollments?: TeamEnrollment[] | null
+  enrollments?: Array<TeamEnrollment> | null
   createdAt?: DateTime | null
   updatedAt?: DateTime | null
   deleted: Boolean
@@ -6740,13 +6900,15 @@ export interface TeamEnrollmentPreviousValues {
 export interface TeamEnrollmentSubscriptionPayload {
   mutation: MutationType
   node?: TeamEnrollment | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: TeamEnrollmentPreviousValues | null
 }
 
 export interface TeamPreviousValues {
   id: UUID
   name: String
+  cartolaName: String
+  cartolaSlug: String
   avatar?: String | null
   createdAt?: DateTime | null
   updatedAt?: DateTime | null
@@ -6756,7 +6918,7 @@ export interface TeamPreviousValues {
 export interface TeamSubscriptionPayload {
   mutation: MutationType
   node?: Team | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: TeamPreviousValues | null
 }
 
@@ -6798,7 +6960,7 @@ export interface TransactionPreviousValues {
 export interface TransactionSubscriptionPayload {
   mutation: MutationType
   node?: Transaction | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: TransactionPreviousValues | null
 }
 
@@ -6846,7 +7008,7 @@ export interface UserPreviousValues {
 export interface UserSubscriptionPayload {
   mutation: MutationType
   node?: User | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: UserPreviousValues | null
 }
 
@@ -6855,8 +7017,8 @@ export interface Wallet {
   amount: Int
   user?: User | null
   league?: League | null
-  incomingTransactions?: Transaction[] | null
-  outgoingTransactions?: Transaction[] | null
+  incomingTransactions?: Array<Transaction> | null
+  outgoingTransactions?: Array<Transaction> | null
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -6890,7 +7052,7 @@ export interface WalletPreviousValues {
 export interface WalletSubscriptionPayload {
   mutation: MutationType
   node?: Wallet | null
-  updatedFields?: String[] | null
+  updatedFields?: Array<String> | null
   previousValues?: WalletPreviousValues | null
 }
 

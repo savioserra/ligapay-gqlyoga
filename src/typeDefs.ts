@@ -87,6 +87,8 @@ type TeamEnrollment {
 type Team {
   id: UUID!
   name: String!
+  cartolaName: String!
+  cartolaSlug: String!
   avatar: String
 
   scores: [Score]
@@ -133,6 +135,8 @@ type LeagueEnrollment {
 
 type Query {
   users: [User!]!
+  """ Obtem dados do usuário logado. """
+  me: User!
 }
 
 type TransactionPayload {
@@ -142,8 +146,15 @@ type TransactionPayload {
   info: String!
 }
 
+type AuthPayload {
+  token: String
+  info: String!
+}
+
 type Mutation {
-  createUser: User
   """ Cria uma transação financeira entre duas carteiras. """
   createTransaction(origin: UUID!, destination: UUID!, amount: Int!): TransactionPayload!
+
+  """ Cria um novo usuário caso não exista usando a Api do Cartola ou loga caso contrário. """
+  login(email: String!, password: String!): AuthPayload!
 }`;

@@ -1,7 +1,9 @@
-import { createTransaction } from "./transaction";
+import auth from "./auth";
+import transaction from "./transaction";
 
 const Mutation = {
-  createTransaction
+  ...transaction,
+  ...auth
 };
 
 export default Mutation;
