@@ -149,6 +149,7 @@ type TransactionPayload {
 type AuthPayload {
   token: String
   info: String!
+  user: User
 }
 
 type Mutation {

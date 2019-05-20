@@ -3,15 +3,17 @@ import { GraphQLError } from "graphql";
 import { sign } from "jsonwebtoken";
 
 import { Cartola } from "../../api/cartola";
+import { User } from "../../prisma";
 import { Resolver } from "../../typings";
 import { appSecret } from "../../utils";
 
 interface AuthPayload {
   token: string;
   info: string;
+  user: User;
 }
 
-const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma }) => {
+const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma }, info) => {
   const user = await prisma.query.user({ where: { email } });
 
   if (!user) {
@@ -32,7 +34,8 @@ const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma 
 
       return {
         token: sign({ userId: newUser.id }, appSecret),
-        info: "Novo usuário criado com sucesso!"
+        info: "Novo usuário criado com sucesso!",
+        user: newUser
       };
     }
   }
@@ -45,7 +48,8 @@ const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma 
 
   return {
     token: sign({ userId: user.id }, appSecret),
-    info: "Logado."
+    info: "Logado.",
+    user
   };
 };
 

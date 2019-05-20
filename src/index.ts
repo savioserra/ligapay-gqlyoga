@@ -15,7 +15,7 @@ const tracing = process.env.TRACING === "true";
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  middlewares: [permissions],
+  // middlewares: [permissions],
   context: req => ({
     ...req,
     prisma: new Prisma({
