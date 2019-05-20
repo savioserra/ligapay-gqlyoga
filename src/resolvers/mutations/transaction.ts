@@ -28,7 +28,7 @@ const createTransaction: Resolver<TransactionPayload> = async (root, args, { pri
       }
   `);
 
-  const code = (data && data.executeRaw) || 1;
+  const code = !!data ? data.executeRaw : 1;
 
   return {
     success: code === 0,

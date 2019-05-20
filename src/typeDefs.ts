@@ -116,8 +116,7 @@ type Wallet {
   amount: Int!
   user: User
   league: League
-  incomingTransactions: [Transaction]
-  outgoingTransactions: [Transaction]
+  transactions: [Transaction]!
 
   createdAt: DateTime!
   updatedAt: DateTime!
