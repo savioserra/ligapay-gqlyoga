@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ligapay
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ligapay-backend-config
+  namespace: ligapay
+data:
+   NODE_ENV: "development"
+   PRISMA_SERVER_ENDPOINT: "http://prisma-service:4000"
+   APP_NAME: "ligapay"
+   STAGE: "develop"
+   APP_SECRET: "localsecret"
+   PORT: "4000"
+   DEBUG: "true"
+   TRACING: "true"
+   PRISMA_MANAGEMENT_API_SECRET: "asecret"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ligapay-backend
+  namespace: ligapay
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ligapay-backend
+  template:
+    metadata:
+      labels:
+        app: ligapay-backend
+    spec:
+      containers:
+      - name: backend
+        image: gcr.io/makeit-241622/ligapay
+        ports:
+        - containerPort: 4000
+        env:
+          - name: PRISMA_SERVER_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                key: PRISMA_SERVER_ENDPOINT
+                name: ligapay-backend-config
+          - name: APP_NAME
+            valueFrom:
+              configMapKeyRef:
+                key: APP_NAME
+                name: ligapay-backend-config
+          - name: STAGE
+            valueFrom:
+              configMapKeyRef:
+                key: STAGE
+                name: ligapay-backend-config
+          - name: NODE_ENV
+            valueFrom:
+              configMapKeyRef:
+                key: NODE_ENV
+                name: ligapay-backend-config
+          - name: APP_SECRET
+            valueFrom:
+              configMapKeyRef:
+                key: APP_SECRET
+                name: ligapay-backend-config
+          - name: DEBUG
+            valueFrom:
+              configMapKeyRef:
+                key: DEBUG
+                name: ligapay-backend-config
+          - name: TRACING
+            valueFrom:
+              configMapKeyRef:
+                key: TRACING
+                name: ligapay-backend-config
+          - name: PRISMA_MANAGEMENT_API_SECRET
+            valueFrom:
+              configMapKeyRef:
+                key: PRISMA_MANAGEMENT_API_SECRET
+                name: ligapay-backend-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ligapay-service
+  namespace: ligapay
+spec:
+  selector:
+    app: ligapay-backend
+  ports:
+  - port: 80
+    targetPort: 4000
+  type: LoadBalancer
