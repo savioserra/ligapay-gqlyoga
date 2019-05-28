@@ -1779,6 +1779,7 @@ type Score {
   score: Int!
   season: Season!
   team: Team!
+  round: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1796,6 +1797,7 @@ type ScoreConnection {
 input ScoreCreateInput {
   id: UUID
   score: Int!
+  round: Int!
   season: SeasonCreateOneWithoutScoresInput!
   team: TeamCreateOneWithoutScoresInput!
 }
@@ -1813,12 +1815,14 @@ input ScoreCreateManyWithoutTeamInput {
 input ScoreCreateWithoutSeasonInput {
   id: UUID
   score: Int!
+  round: Int!
   team: TeamCreateOneWithoutScoresInput!
 }
 
 input ScoreCreateWithoutTeamInput {
   id: UUID
   score: Int!
+  round: Int!
   season: SeasonCreateOneWithoutScoresInput!
 }
 
@@ -1836,6 +1840,8 @@ enum ScoreOrderByInput {
   id_DESC
   score_ASC
   score_DESC
+  round_ASC
+  round_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1845,6 +1851,7 @@ enum ScoreOrderByInput {
 type ScorePreviousValues {
   id: UUID!
   score: Int!
+  round: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1890,6 +1897,28 @@ input ScoreScalarWhereInput {
 
   """All values greater than or equal the given value."""
   score_gte: Int
+  round: Int
+
+  """All values that are not equal to given value."""
+  round_not: Int
+
+  """All values that are contained in given list."""
+  round_in: [Int!]
+
+  """All values that are not contained in given list."""
+  round_not_in: [Int!]
+
+  """All values less than the given value."""
+  round_lt: Int
+
+  """All values less than or equal the given value."""
+  round_lte: Int
+
+  """All values greater than the given value."""
+  round_gt: Int
+
+  """All values greater than or equal the given value."""
+  round_gte: Int
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -1975,16 +2004,19 @@ input ScoreSubscriptionWhereInput {
 
 input ScoreUpdateInput {
   score: Int
+  round: Int
   season: SeasonUpdateOneRequiredWithoutScoresInput
   team: TeamUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateManyDataInput {
   score: Int
+  round: Int
 }
 
 input ScoreUpdateManyMutationInput {
   score: Int
+  round: Int
 }
 
 input ScoreUpdateManyWithoutSeasonInput {
@@ -2018,11 +2050,13 @@ input ScoreUpdateManyWithWhereNestedInput {
 
 input ScoreUpdateWithoutSeasonDataInput {
   score: Int
+  round: Int
   team: TeamUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateWithoutTeamDataInput {
   score: Int
+  round: Int
   season: SeasonUpdateOneRequiredWithoutScoresInput
 }
 
@@ -2089,6 +2123,28 @@ input ScoreWhereInput {
 
   """All values greater than or equal the given value."""
   score_gte: Int
+  round: Int
+
+  """All values that are not equal to given value."""
+  round_not: Int
+
+  """All values that are contained in given list."""
+  round_in: [Int!]
+
+  """All values that are not contained in given list."""
+  round_not_in: [Int!]
+
+  """All values less than the given value."""
+  round_lt: Int
+
+  """All values less than or equal the given value."""
+  round_lte: Int
+
+  """All values greater than the given value."""
+  round_gt: Int
+
+  """All values greater than or equal the given value."""
+  round_gte: Int
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -2145,6 +2201,8 @@ type Season {
   id: UUID!
   name: String!
   description: String
+  current: Boolean!
+  currentRound: Int!
   scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
   leaguesEnrollments(where: LeagueEnrollmentWhereInput, orderBy: LeagueEnrollmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LeagueEnrollment!]
   createdAt: DateTime!
@@ -2165,6 +2223,8 @@ input SeasonCreateInput {
   id: UUID
   name: String!
   description: String
+  current: Boolean
+  currentRound: Int!
   scores: ScoreCreateManyWithoutSeasonInput
   leaguesEnrollments: LeagueEnrollmentCreateManyWithoutSeasonInput
 }
@@ -2183,6 +2243,8 @@ input SeasonCreateWithoutLeaguesEnrollmentsInput {
   id: UUID
   name: String!
   description: String
+  current: Boolean
+  currentRound: Int!
   scores: ScoreCreateManyWithoutSeasonInput
 }
 
@@ -2190,6 +2252,8 @@ input SeasonCreateWithoutScoresInput {
   id: UUID
   name: String!
   description: String
+  current: Boolean
+  currentRound: Int!
   leaguesEnrollments: LeagueEnrollmentCreateManyWithoutSeasonInput
 }
 
@@ -2209,6 +2273,10 @@ enum SeasonOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  current_ASC
+  current_DESC
+  currentRound_ASC
+  currentRound_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -2219,6 +2287,8 @@ type SeasonPreviousValues {
   id: UUID!
   name: String!
   description: String
+  current: Boolean!
+  currentRound: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2263,6 +2333,8 @@ input SeasonSubscriptionWhereInput {
 input SeasonUpdateInput {
   name: String
   description: String
+  current: Boolean
+  currentRound: Int
   scores: ScoreUpdateManyWithoutSeasonInput
   leaguesEnrollments: LeagueEnrollmentUpdateManyWithoutSeasonInput
 }
@@ -2270,6 +2342,8 @@ input SeasonUpdateInput {
 input SeasonUpdateManyMutationInput {
   name: String
   description: String
+  current: Boolean
+  currentRound: Int
 }
 
 input SeasonUpdateOneRequiredWithoutLeaguesEnrollmentsInput {
@@ -2289,12 +2363,16 @@ input SeasonUpdateOneRequiredWithoutScoresInput {
 input SeasonUpdateWithoutLeaguesEnrollmentsDataInput {
   name: String
   description: String
+  current: Boolean
+  currentRound: Int
   scores: ScoreUpdateManyWithoutSeasonInput
 }
 
 input SeasonUpdateWithoutScoresDataInput {
   name: String
   description: String
+  current: Boolean
+  currentRound: Int
   leaguesEnrollments: LeagueEnrollmentUpdateManyWithoutSeasonInput
 }
 
@@ -2407,6 +2485,32 @@ input SeasonWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  current: Boolean
+
+  """All values that are not equal to given value."""
+  current_not: Boolean
+  currentRound: Int
+
+  """All values that are not equal to given value."""
+  currentRound_not: Int
+
+  """All values that are contained in given list."""
+  currentRound_in: [Int!]
+
+  """All values that are not contained in given list."""
+  currentRound_not_in: [Int!]
+
+  """All values less than the given value."""
+  currentRound_lt: Int
+
+  """All values less than or equal the given value."""
+  currentRound_lte: Int
+
+  """All values greater than the given value."""
+  currentRound_gt: Int
+
+  """All values greater than or equal the given value."""
+  currentRound_gte: Int
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -4439,6 +4543,8 @@ export type ScoreOrderByInput =   'id_ASC' |
   'id_DESC' |
   'score_ASC' |
   'score_DESC' |
+  'round_ASC' |
+  'round_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
@@ -4450,6 +4556,10 @@ export type SeasonOrderByInput =   'id_ASC' |
   'name_DESC' |
   'description_ASC' |
   'description_DESC' |
+  'current_ASC' |
+  'current_DESC' |
+  'currentRound_ASC' |
+  'currentRound_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
@@ -5217,6 +5327,7 @@ export interface LeagueWhereUniqueInput {
 export interface ScoreCreateInput {
   id?: UUID | null
   score: Int
+  round: Int
   season: SeasonCreateOneWithoutScoresInput
   team: TeamCreateOneWithoutScoresInput
 }
@@ -5234,12 +5345,14 @@ export interface ScoreCreateManyWithoutTeamInput {
 export interface ScoreCreateWithoutSeasonInput {
   id?: UUID | null
   score: Int
+  round: Int
   team: TeamCreateOneWithoutScoresInput
 }
 
 export interface ScoreCreateWithoutTeamInput {
   id?: UUID | null
   score: Int
+  round: Int
   season: SeasonCreateOneWithoutScoresInput
 }
 
@@ -5259,6 +5372,14 @@ export interface ScoreScalarWhereInput {
   score_lte?: Int | null
   score_gt?: Int | null
   score_gte?: Int | null
+  round?: Int | null
+  round_not?: Int | null
+  round_in?: Int[] | Int | null
+  round_not_in?: Int[] | Int | null
+  round_lt?: Int | null
+  round_lte?: Int | null
+  round_gt?: Int | null
+  round_gte?: Int | null
   createdAt?: DateTime | null
   createdAt_not?: DateTime | null
   createdAt_in?: DateTime[] | DateTime | null
@@ -5290,16 +5411,19 @@ export interface ScoreSubscriptionWhereInput {
 
 export interface ScoreUpdateInput {
   score?: Int | null
+  round?: Int | null
   season?: SeasonUpdateOneRequiredWithoutScoresInput | null
   team?: TeamUpdateOneRequiredWithoutScoresInput | null
 }
 
 export interface ScoreUpdateManyDataInput {
   score?: Int | null
+  round?: Int | null
 }
 
 export interface ScoreUpdateManyMutationInput {
   score?: Int | null
+  round?: Int | null
 }
 
 export interface ScoreUpdateManyWithoutSeasonInput {
@@ -5333,11 +5457,13 @@ export interface ScoreUpdateManyWithWhereNestedInput {
 
 export interface ScoreUpdateWithoutSeasonDataInput {
   score?: Int | null
+  round?: Int | null
   team?: TeamUpdateOneRequiredWithoutScoresInput | null
 }
 
 export interface ScoreUpdateWithoutTeamDataInput {
   score?: Int | null
+  round?: Int | null
   season?: SeasonUpdateOneRequiredWithoutScoresInput | null
 }
 
@@ -5379,6 +5505,14 @@ export interface ScoreWhereInput {
   score_lte?: Int | null
   score_gt?: Int | null
   score_gte?: Int | null
+  round?: Int | null
+  round_not?: Int | null
+  round_in?: Int[] | Int | null
+  round_not_in?: Int[] | Int | null
+  round_lt?: Int | null
+  round_lte?: Int | null
+  round_gt?: Int | null
+  round_gte?: Int | null
   createdAt?: DateTime | null
   createdAt_not?: DateTime | null
   createdAt_in?: DateTime[] | DateTime | null
@@ -5407,6 +5541,8 @@ export interface SeasonCreateInput {
   id?: UUID | null
   name: String
   description?: String | null
+  current?: Boolean | null
+  currentRound: Int
   scores?: ScoreCreateManyWithoutSeasonInput | null
   leaguesEnrollments?: LeagueEnrollmentCreateManyWithoutSeasonInput | null
 }
@@ -5425,6 +5561,8 @@ export interface SeasonCreateWithoutLeaguesEnrollmentsInput {
   id?: UUID | null
   name: String
   description?: String | null
+  current?: Boolean | null
+  currentRound: Int
   scores?: ScoreCreateManyWithoutSeasonInput | null
 }
 
@@ -5432,6 +5570,8 @@ export interface SeasonCreateWithoutScoresInput {
   id?: UUID | null
   name: String
   description?: String | null
+  current?: Boolean | null
+  currentRound: Int
   leaguesEnrollments?: LeagueEnrollmentCreateManyWithoutSeasonInput | null
 }
 
@@ -5449,6 +5589,8 @@ export interface SeasonSubscriptionWhereInput {
 export interface SeasonUpdateInput {
   name?: String | null
   description?: String | null
+  current?: Boolean | null
+  currentRound?: Int | null
   scores?: ScoreUpdateManyWithoutSeasonInput | null
   leaguesEnrollments?: LeagueEnrollmentUpdateManyWithoutSeasonInput | null
 }
@@ -5456,6 +5598,8 @@ export interface SeasonUpdateInput {
 export interface SeasonUpdateManyMutationInput {
   name?: String | null
   description?: String | null
+  current?: Boolean | null
+  currentRound?: Int | null
 }
 
 export interface SeasonUpdateOneRequiredWithoutLeaguesEnrollmentsInput {
@@ -5475,12 +5619,16 @@ export interface SeasonUpdateOneRequiredWithoutScoresInput {
 export interface SeasonUpdateWithoutLeaguesEnrollmentsDataInput {
   name?: String | null
   description?: String | null
+  current?: Boolean | null
+  currentRound?: Int | null
   scores?: ScoreUpdateManyWithoutSeasonInput | null
 }
 
 export interface SeasonUpdateWithoutScoresDataInput {
   name?: String | null
   description?: String | null
+  current?: Boolean | null
+  currentRound?: Int | null
   leaguesEnrollments?: LeagueEnrollmentUpdateManyWithoutSeasonInput | null
 }
 
@@ -5530,6 +5678,16 @@ export interface SeasonWhereInput {
   description_not_starts_with?: String | null
   description_ends_with?: String | null
   description_not_ends_with?: String | null
+  current?: Boolean | null
+  current_not?: Boolean | null
+  currentRound?: Int | null
+  currentRound_not?: Int | null
+  currentRound_in?: Int[] | Int | null
+  currentRound_not_in?: Int[] | Int | null
+  currentRound_lt?: Int | null
+  currentRound_lte?: Int | null
+  currentRound_gt?: Int | null
+  currentRound_gte?: Int | null
   createdAt?: DateTime | null
   createdAt_not?: DateTime | null
   createdAt_in?: DateTime[] | DateTime | null
@@ -6748,6 +6906,7 @@ export interface Score {
   score: Int
   season: Season
   team: Team
+  round: Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -6774,6 +6933,7 @@ export interface ScoreEdge {
 export interface ScorePreviousValues {
   id: UUID
   score: Int
+  round: Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -6789,6 +6949,8 @@ export interface Season {
   id: UUID
   name: String
   description?: String | null
+  current: Boolean
+  currentRound: Int
   scores?: Array<Score> | null
   leaguesEnrollments?: Array<LeagueEnrollment> | null
   createdAt: DateTime
@@ -6818,6 +6980,8 @@ export interface SeasonPreviousValues {
   id: UUID
   name: String
   description?: String | null
+  current: Boolean
+  currentRound: Int
   createdAt: DateTime
   updatedAt: DateTime
 }

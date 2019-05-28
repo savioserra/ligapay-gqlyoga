@@ -91,9 +91,9 @@ type Team {
   cartolaSlug: String!
   avatar: String
 
-  scores: [Score]
+  scores: [Score!]!
   owner: User!
-  enrollments: [TeamEnrollment]
+  enrollments: [TeamEnrollment!]!
 
   createdAt: DateTime
   updatedAt: DateTime

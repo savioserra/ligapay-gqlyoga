@@ -8,7 +8,8 @@
     "start:dev": "ts-node-dev --no-notify --respawn --transpileOnly ./src",
     "test": "echo \"Error: no test specified\"",
     "tslint:check": "tslint src/**/*.ts",
-    "tslint:fix": "tslint 'src/**/*.ts' --fix"
+    "tslint:fix": "tslint 'src/**/*.ts' --fix",
+    "prisma:deploy": "export APP_TOKEN=$(prisma token) && cd prisma && prisma deploy"
   },
   "author": "savioserra",
   "license": "MIT",
