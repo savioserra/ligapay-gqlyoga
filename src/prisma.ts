@@ -1776,7 +1776,7 @@ type Query {
 
 type Score {
   id: UUID!
-  score: Int!
+  score: Float!
   season: Season!
   team: Team!
   round: Int!
@@ -1796,7 +1796,7 @@ type ScoreConnection {
 
 input ScoreCreateInput {
   id: UUID
-  score: Int!
+  score: Float!
   round: Int!
   season: SeasonCreateOneWithoutScoresInput!
   team: TeamCreateOneWithoutScoresInput!
@@ -1814,14 +1814,14 @@ input ScoreCreateManyWithoutTeamInput {
 
 input ScoreCreateWithoutSeasonInput {
   id: UUID
-  score: Int!
+  score: Float!
   round: Int!
   team: TeamCreateOneWithoutScoresInput!
 }
 
 input ScoreCreateWithoutTeamInput {
   id: UUID
-  score: Int!
+  score: Float!
   round: Int!
   season: SeasonCreateOneWithoutScoresInput!
 }
@@ -1850,7 +1850,7 @@ enum ScoreOrderByInput {
 
 type ScorePreviousValues {
   id: UUID!
-  score: Int!
+  score: Float!
   round: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1875,28 +1875,28 @@ input ScoreScalarWhereInput {
 
   """All values that are not contained in given list."""
   id_not_in: [UUID!]
-  score: Int
+  score: Float
 
   """All values that are not equal to given value."""
-  score_not: Int
+  score_not: Float
 
   """All values that are contained in given list."""
-  score_in: [Int!]
+  score_in: [Float!]
 
   """All values that are not contained in given list."""
-  score_not_in: [Int!]
+  score_not_in: [Float!]
 
   """All values less than the given value."""
-  score_lt: Int
+  score_lt: Float
 
   """All values less than or equal the given value."""
-  score_lte: Int
+  score_lte: Float
 
   """All values greater than the given value."""
-  score_gt: Int
+  score_gt: Float
 
   """All values greater than or equal the given value."""
-  score_gte: Int
+  score_gte: Float
   round: Int
 
   """All values that are not equal to given value."""
@@ -2003,19 +2003,19 @@ input ScoreSubscriptionWhereInput {
 }
 
 input ScoreUpdateInput {
-  score: Int
+  score: Float
   round: Int
   season: SeasonUpdateOneRequiredWithoutScoresInput
   team: TeamUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateManyDataInput {
-  score: Int
+  score: Float
   round: Int
 }
 
 input ScoreUpdateManyMutationInput {
-  score: Int
+  score: Float
   round: Int
 }
 
@@ -2049,13 +2049,13 @@ input ScoreUpdateManyWithWhereNestedInput {
 }
 
 input ScoreUpdateWithoutSeasonDataInput {
-  score: Int
+  score: Float
   round: Int
   team: TeamUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateWithoutTeamDataInput {
-  score: Int
+  score: Float
   round: Int
   season: SeasonUpdateOneRequiredWithoutScoresInput
 }
@@ -2101,28 +2101,28 @@ input ScoreWhereInput {
 
   """All values that are not contained in given list."""
   id_not_in: [UUID!]
-  score: Int
+  score: Float
 
   """All values that are not equal to given value."""
-  score_not: Int
+  score_not: Float
 
   """All values that are contained in given list."""
-  score_in: [Int!]
+  score_in: [Float!]
 
   """All values that are not contained in given list."""
-  score_not_in: [Int!]
+  score_not_in: [Float!]
 
   """All values less than the given value."""
-  score_lt: Int
+  score_lt: Float
 
   """All values less than or equal the given value."""
-  score_lte: Int
+  score_lte: Float
 
   """All values greater than the given value."""
-  score_gt: Int
+  score_gt: Float
 
   """All values greater than or equal the given value."""
-  score_gte: Int
+  score_gte: Float
   round: Int
 
   """All values that are not equal to given value."""
@@ -5326,7 +5326,7 @@ export interface LeagueWhereUniqueInput {
 
 export interface ScoreCreateInput {
   id?: UUID | null
-  score: Int
+  score: Float
   round: Int
   season: SeasonCreateOneWithoutScoresInput
   team: TeamCreateOneWithoutScoresInput
@@ -5344,14 +5344,14 @@ export interface ScoreCreateManyWithoutTeamInput {
 
 export interface ScoreCreateWithoutSeasonInput {
   id?: UUID | null
-  score: Int
+  score: Float
   round: Int
   team: TeamCreateOneWithoutScoresInput
 }
 
 export interface ScoreCreateWithoutTeamInput {
   id?: UUID | null
-  score: Int
+  score: Float
   round: Int
   season: SeasonCreateOneWithoutScoresInput
 }
@@ -5364,14 +5364,14 @@ export interface ScoreScalarWhereInput {
   id_not?: UUID | null
   id_in?: UUID[] | UUID | null
   id_not_in?: UUID[] | UUID | null
-  score?: Int | null
-  score_not?: Int | null
-  score_in?: Int[] | Int | null
-  score_not_in?: Int[] | Int | null
-  score_lt?: Int | null
-  score_lte?: Int | null
-  score_gt?: Int | null
-  score_gte?: Int | null
+  score?: Float | null
+  score_not?: Float | null
+  score_in?: Float[] | Float | null
+  score_not_in?: Float[] | Float | null
+  score_lt?: Float | null
+  score_lte?: Float | null
+  score_gt?: Float | null
+  score_gte?: Float | null
   round?: Int | null
   round_not?: Int | null
   round_in?: Int[] | Int | null
@@ -5410,19 +5410,19 @@ export interface ScoreSubscriptionWhereInput {
 }
 
 export interface ScoreUpdateInput {
-  score?: Int | null
+  score?: Float | null
   round?: Int | null
   season?: SeasonUpdateOneRequiredWithoutScoresInput | null
   team?: TeamUpdateOneRequiredWithoutScoresInput | null
 }
 
 export interface ScoreUpdateManyDataInput {
-  score?: Int | null
+  score?: Float | null
   round?: Int | null
 }
 
 export interface ScoreUpdateManyMutationInput {
-  score?: Int | null
+  score?: Float | null
   round?: Int | null
 }
 
@@ -5456,13 +5456,13 @@ export interface ScoreUpdateManyWithWhereNestedInput {
 }
 
 export interface ScoreUpdateWithoutSeasonDataInput {
-  score?: Int | null
+  score?: Float | null
   round?: Int | null
   team?: TeamUpdateOneRequiredWithoutScoresInput | null
 }
 
 export interface ScoreUpdateWithoutTeamDataInput {
-  score?: Int | null
+  score?: Float | null
   round?: Int | null
   season?: SeasonUpdateOneRequiredWithoutScoresInput | null
 }
@@ -5497,14 +5497,14 @@ export interface ScoreWhereInput {
   id_not?: UUID | null
   id_in?: UUID[] | UUID | null
   id_not_in?: UUID[] | UUID | null
-  score?: Int | null
-  score_not?: Int | null
-  score_in?: Int[] | Int | null
-  score_not_in?: Int[] | Int | null
-  score_lt?: Int | null
-  score_lte?: Int | null
-  score_gt?: Int | null
-  score_gte?: Int | null
+  score?: Float | null
+  score_not?: Float | null
+  score_in?: Float[] | Float | null
+  score_not_in?: Float[] | Float | null
+  score_lt?: Float | null
+  score_lte?: Float | null
+  score_gt?: Float | null
+  score_gte?: Float | null
   round?: Int | null
   round_not?: Int | null
   round_in?: Int[] | Int | null
@@ -6903,7 +6903,7 @@ export interface PageInfo {
 
 export interface Score {
   id: UUID
-  score: Int
+  score: Float
   season: Season
   team: Team
   round: Int
@@ -6932,7 +6932,7 @@ export interface ScoreEdge {
 
 export interface ScorePreviousValues {
   id: UUID
-  score: Int
+  score: Float
   round: Int
   createdAt: DateTime
   updatedAt: DateTime
@@ -7226,6 +7226,11 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean
 
 export type DateTime = Date | string
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.

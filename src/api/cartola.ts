@@ -1,4 +1,6 @@
 import axios, { AxiosInstance } from "axios";
+import { Score } from "../prisma";
+import { range } from "lodash";
 
 export class Cartola {
   public static async login(email: string, password: string): Promise<{ token?: string }> {
@@ -25,6 +27,30 @@ export class Cartola {
     } catch (error) {
       return null;
     }
+  }
+
+  public static async getCurrentRound(): Promise<number> {
+    try {
+      const { data } = await this.axiosInstance.get("mercado/status");
+      const { rodada_atual: currentRound } = data;
+
+      return currentRound;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  public static async getTeamScores(teamSlug: string): Promise<{ round: number; score: number }[]> {
+    const round = await this.getCurrentRound();
+
+    return Promise.all(
+      range(1, round).map(async round => {
+        const { data } = await this.axiosInstance.get(`time/slug/${teamSlug}/${round}`);
+        const { pontos } = data;
+
+        return pontos ? { round, score: pontos } : null;
+      })
+    );
   }
 
   private static serviceId: number = 4728;

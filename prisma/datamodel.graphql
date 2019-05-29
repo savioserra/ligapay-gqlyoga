@@ -44,7 +44,7 @@ type LeagueType {
 
 type Score {
   id: UUID! @id @unique
-  score: Int!
+  score: Float!
 
   season: Season! @db(name: "season_id")
   team: Team! @db(name: "team_id")

@@ -52,10 +52,12 @@ type LeagueType {
 
 type Score {
   id: UUID!
-  score: Int!
+  score: Float!
 
+  """ Rodada. """
+  round: Int!
+  """ Temporada. """
   season: Season!
-  team: Team!
 
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -66,7 +68,12 @@ type Season {
   name: String!
   description: String
 
-  scores: [Score]
+  """ Rodada atual. """
+  currentRound: Int!
+  """ Verdadeiro se é a temporada atual, Falso caso contrário. """
+  current: Boolean!
+
+  """ Inscrições das ligas na temporada. """
   leaguesEnrollments: [LeagueEnrollment]
 
   createdAt: DateTime!
@@ -93,6 +100,8 @@ type Team {
 
   scores: [Score!]!
   owner: User!
+
+  """ Inscrições em ligas. """
   enrollments: [TeamEnrollment!]!
 
   createdAt: DateTime

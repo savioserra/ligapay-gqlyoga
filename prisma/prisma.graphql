@@ -1,5 +1,5 @@
 # source: http://prisma:4466/ligapay/develop
-# timestamp: Tue May 28 2019 16:15:02 GMT+0000 (Coordinated Universal Time)
+# timestamp: Wed May 29 2019 00:28:52 GMT+0000 (Coordinated Universal Time)
 
 type AggregateLeague {
   count: Int!
@@ -1629,7 +1629,7 @@ type Query {
 
 type Score {
   id: UUID!
-  score: Int!
+  score: Float!
   season: Season!
   team: Team!
   round: Int!
@@ -1649,7 +1649,7 @@ type ScoreConnection {
 
 input ScoreCreateInput {
   id: UUID
-  score: Int!
+  score: Float!
   round: Int!
   season: SeasonCreateOneWithoutScoresInput!
   team: TeamCreateOneWithoutScoresInput!
@@ -1667,14 +1667,14 @@ input ScoreCreateManyWithoutTeamInput {
 
 input ScoreCreateWithoutSeasonInput {
   id: UUID
-  score: Int!
+  score: Float!
   round: Int!
   team: TeamCreateOneWithoutScoresInput!
 }
 
 input ScoreCreateWithoutTeamInput {
   id: UUID
-  score: Int!
+  score: Float!
   round: Int!
   season: SeasonCreateOneWithoutScoresInput!
 }
@@ -1703,7 +1703,7 @@ enum ScoreOrderByInput {
 
 type ScorePreviousValues {
   id: UUID!
-  score: Int!
+  score: Float!
   round: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1728,28 +1728,28 @@ input ScoreScalarWhereInput {
 
   """All values that are not contained in given list."""
   id_not_in: [UUID!]
-  score: Int
+  score: Float
 
   """All values that are not equal to given value."""
-  score_not: Int
+  score_not: Float
 
   """All values that are contained in given list."""
-  score_in: [Int!]
+  score_in: [Float!]
 
   """All values that are not contained in given list."""
-  score_not_in: [Int!]
+  score_not_in: [Float!]
 
   """All values less than the given value."""
-  score_lt: Int
+  score_lt: Float
 
   """All values less than or equal the given value."""
-  score_lte: Int
+  score_lte: Float
 
   """All values greater than the given value."""
-  score_gt: Int
+  score_gt: Float
 
   """All values greater than or equal the given value."""
-  score_gte: Int
+  score_gte: Float
   round: Int
 
   """All values that are not equal to given value."""
@@ -1856,19 +1856,19 @@ input ScoreSubscriptionWhereInput {
 }
 
 input ScoreUpdateInput {
-  score: Int
+  score: Float
   round: Int
   season: SeasonUpdateOneRequiredWithoutScoresInput
   team: TeamUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateManyDataInput {
-  score: Int
+  score: Float
   round: Int
 }
 
 input ScoreUpdateManyMutationInput {
-  score: Int
+  score: Float
   round: Int
 }
 
@@ -1902,13 +1902,13 @@ input ScoreUpdateManyWithWhereNestedInput {
 }
 
 input ScoreUpdateWithoutSeasonDataInput {
-  score: Int
+  score: Float
   round: Int
   team: TeamUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateWithoutTeamDataInput {
-  score: Int
+  score: Float
   round: Int
   season: SeasonUpdateOneRequiredWithoutScoresInput
 }
@@ -1954,28 +1954,28 @@ input ScoreWhereInput {
 
   """All values that are not contained in given list."""
   id_not_in: [UUID!]
-  score: Int
+  score: Float
 
   """All values that are not equal to given value."""
-  score_not: Int
+  score_not: Float
 
   """All values that are contained in given list."""
-  score_in: [Int!]
+  score_in: [Float!]
 
   """All values that are not contained in given list."""
-  score_not_in: [Int!]
+  score_not_in: [Float!]
 
   """All values less than the given value."""
-  score_lt: Int
+  score_lt: Float
 
   """All values less than or equal the given value."""
-  score_lte: Int
+  score_lte: Float
 
   """All values greater than the given value."""
-  score_gt: Int
+  score_gt: Float
 
   """All values greater than or equal the given value."""
-  score_gte: Int
+  score_gte: Float
   round: Int
 
   """All values that are not equal to given value."""

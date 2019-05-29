@@ -21,19 +21,22 @@ const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma 
 
     if (token) {
       const team = await Cartola.getTeam(token);
+      const scores = (await Cartola.getTeamScores(team.cartolaSlug)).filter(s => s !== null);     
+      
+      const [currentSeason] = await prisma.query.seasons({ where: { current: true } });
 
       const newUser = await prisma.mutation.createUser({
         data: {
           globoToken: token,
           email,
           password: await hash(password, 10),
-          team: { create: team },
+          team: { create: { ...team, scores: { create: scores.map(s => ({ ...s, season: { connect: { id: currentSeason.id } } })) } } },
           wallet: { create: {} }
         }
       });
 
       return {
-        token: sign({ userId: newUser.id }, appSecret),
+        token: sign({ userId: newUser.id }, appSecret, { noTimestamp: true }),
         info: "Novo usuário criado com sucesso!",
         user: newUser
       };
@@ -47,7 +50,7 @@ const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma 
   }
 
   return {
-    token: sign({ userId: user.id }, appSecret),
+    token: sign({ userId: user.id }, appSecret, { noTimestamp: true }),
     info: "Logado.",
     user
   };
