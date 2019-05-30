@@ -5,7 +5,7 @@ import { sign } from "jsonwebtoken";
 import { Cartola } from "../../api/cartola";
 import { User } from "../../prisma";
 import { Resolver } from "../../typings";
-import { appSecret } from "../../utils";
+import { appSecret, retry } from "../../utils";
 
 interface AuthPayload {
   token: string;
@@ -21,8 +21,8 @@ const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma 
 
     if (token) {
       const team = await Cartola.getTeam(token);
-      const scores = (await Cartola.getTeamScores(team.cartolaSlug)).filter(s => s !== null);     
-      
+      const scores = await Cartola.getTeamScores(team.cartolaSlug);
+
       const [currentSeason] = await prisma.query.seasons({ where: { current: true } });
 
       const newUser = await prisma.mutation.createUser({
@@ -47,6 +47,18 @@ const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma 
 
   if (!isValidPassword) {
     throw new GraphQLError("Credenciais inválidas.");
+  }
+
+  let team;
+
+  try {
+    team = await Cartola.getTeam(user.globoToken);
+  } catch (error) {
+    const { token } = await retry(async () => await Cartola.login(email, password));
+    
+    team = await retry(async () => await Cartola.getTeam(token), 5);
+
+    await prisma.mutation.updateUser({ where: { id: user.id }, data: { team: { update: team }, globoToken: token } });
   }
 
   return {

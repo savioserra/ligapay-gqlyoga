@@ -16,25 +16,21 @@ export class Cartola {
   }
 
   public static async getTeam(globoToken: string) {
-    try {
-      const { data } = await this.axiosInstance.get("auth/time", {
-        headers: { "X-GLB-Token": globoToken }
-      });
+    const { data } = await this.axiosInstance.get("auth/time", {
+      headers: { "X-GLB-Token": globoToken }
+    });
 
-      const { nome_cartola: cartolaName, nome: name, slug: cartolaSlug, url_escudo_png: avatar } = data.time;
+    const { nome_cartola: cartolaName, nome: name, slug: cartolaSlug, url_escudo_png: avatar } = data.time;
 
-      return { cartolaName, name, cartolaSlug, avatar };
-    } catch (error) {
-      return null;
-    }
+    return { cartolaName, name, cartolaSlug, avatar };
   }
 
   public static async getCurrentRound(): Promise<number> {
     try {
       const { data } = await this.axiosInstance.get("mercado/status");
-      const { rodada_atual: currentRound } = data;
+      const { rodada_atual: currentRound, status_mercado: isOpen } = data;
 
-      return currentRound;
+      return isOpen ? currentRound - 1 : currentRound;
     } catch (error) {
       return null;
     }
@@ -43,14 +39,16 @@ export class Cartola {
   public static async getTeamScores(teamSlug: string): Promise<{ round: number; score: number }[]> {
     const round = await this.getCurrentRound();
 
-    return Promise.all(
-      range(1, round).map(async round => {
+    const scores = await Promise.all(
+      range(1, round + 1).map(async round => {
         const { data } = await this.axiosInstance.get(`time/slug/${teamSlug}/${round}`);
         const { pontos } = data;
 
         return pontos ? { round, score: pontos } : null;
       })
     );
+
+    return scores.filter(s => s !== null);
   }
 
   private static serviceId: number = 4728;

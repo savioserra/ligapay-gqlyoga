@@ -9,7 +9,7 @@ const users: Resolver<User[]> = async (root, args, ctx, info) => {
 const me: Resolver<User> = async (root, args, ctx, info) => {
   const id = getUserId(ctx);
 
-  return { ...ctx.prisma.query.user({ where: { id } }, info), id };
+  return ctx.prisma.query.user({ where: { id } });
 };
 
 export default {

@@ -40,7 +40,7 @@ const rules = {
 
   canTransferFunds: rule()(async (parent, { origin }, context, info) => {
     const id = getUserId(context);
-    const user = await context.prisma.wallet({ id: origin }).user();
+    const [user] = await context.prisma.query.users({ where: { wallet: { id: origin } } });
 
     return user.id === id;
   })

@@ -14,3 +14,19 @@ export const getUserId = (context: any) => {
     return verifiedToken && verifiedToken.userId;
   }
 };
+
+export const retry = async <T> (callback: Function, retries = 2) => {
+  let retry = 0;
+
+  while (retry < retries) {
+    try {
+      return await callback();
+    } catch (error) {
+      // ignore
+    }
+
+    retry++;
+  }
+
+  throw new Error("Maximum retries attempts reached.");
+};
