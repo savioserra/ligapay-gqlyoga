@@ -166,4 +166,9 @@ type Mutation {
 
   """ Cria um novo usuário caso não exista usando a Api do Cartola ou loga caso contrário. """
   login(email: String!, password: String!): AuthPayload!
-}`;
+}
+
+type Subscription {
+  count: Int!
+}
+`;

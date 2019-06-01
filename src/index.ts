@@ -1,6 +1,6 @@
 // tslint:disable no-console
 
-import { GraphQLServer } from "graphql-yoga";
+import { GraphQLServer, PubSub } from "graphql-yoga";
 import { Prisma } from "./prisma";
 import { typeDefs } from "./typeDefs";
 
@@ -16,12 +16,14 @@ const port = process.env.PORT || 4000;
 const debug = process.env.DEBUG === "true";
 const tracing = process.env.TRACING === "true";
 
+const pubsub = new PubSub();
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  middlewares: [logger, permissions],
+  middlewares: [permissions],
   context: req => ({
     ...req,
+    pubsub,
     prisma: new Prisma({
       endpoint: prismaEndpoint,
       secret: appSecret,

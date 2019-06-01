@@ -1,5 +1,6 @@
 import Mutation from "./mutations";
 import Query from "./queries";
+import Subscription from "./subscriptions";
 
 import { User } from "./types/User";
 import { Wallet } from "./types/Wallet";
@@ -12,5 +13,6 @@ export default {
   User,
   Wallet,
   Team,
-  Score
+  Score,
+  Subscription
 };
