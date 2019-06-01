@@ -8,6 +8,7 @@ export const permissions = shield(
     Query
   },
   {
-    allowExternalErrors: true
+    allowExternalErrors: true,
+    debug: true
   }
 );

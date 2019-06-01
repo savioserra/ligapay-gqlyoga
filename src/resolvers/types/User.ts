@@ -1,14 +1,14 @@
 import { Team, Wallet } from "../../prisma";
 import { Resolver } from "../../typings";
 
-const wallet: Resolver<Wallet> = async (root, args, { prisma }, info) => {
-  const [w] = await prisma.query.wallets({ where: { user: { id: root.id } } });
+const wallet: Resolver<Wallet> = async (user, args, { prisma }, info) => {
+  const [w] = await prisma.query.wallets({ where: { user: { id: user.id } } });
 
   return w;
 };
 
-const team: Resolver<Team> = async (root, args, { prisma }, info) => {
-  const [t] = await prisma.query.teams({ where: { owner: { id: root.id } } });
+const team: Resolver<Team> = async (user, args, { prisma }, info) => {
+  const [t] = await prisma.query.teams({ where: { owner: { id: user.id } } });
 
   return {...t, id: t.id};
 };

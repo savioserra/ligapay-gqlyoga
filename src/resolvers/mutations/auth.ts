@@ -13,7 +13,7 @@ interface AuthPayload {
   user: User;
 }
 
-const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma }, info) => {
+const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma }) => {
   const user = await prisma.query.user({ where: { email } });
 
   if (!user) {
