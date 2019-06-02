@@ -16,7 +16,8 @@ const port = process.env.PORT || 4000;
 const debug = process.env.DEBUG === "true";
 const tracing = process.env.TRACING === "true";
 
-const pubsub = new PubSub();
+export const pubsub = new PubSub();
+
 const server = new GraphQLServer({
   typeDefs,
   resolvers,

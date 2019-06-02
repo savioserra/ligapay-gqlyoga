@@ -1,3 +1,4 @@
+import uuid = require("uuid/v4");
 import { Resolver } from "../../typings";
 
 interface TransactionPayload {
@@ -22,17 +23,19 @@ const createTransaction: Resolver<TransactionPayload> = async (root, args, { pri
     };
   }
 
+  const transactionId = uuid();
   const { data } = await prisma.request(`
       mutation CreateTransaction {
-        executeRaw(query: "call create_transaction('${origin}', '${destination}', ${amount})")
+        executeRaw(query: "call create_transaction('${origin}', '${destination}', ${amount}, '${transactionId}')")
       }
   `);
 
-  const code = !!data ? data.executeRaw : 1;
+  const success = (!!data ? data.executeRaw : 1) === 0;
 
   return {
-    success: code === 0,
-    info: code === 0 ? "Transação realizada com sucesso." : "Ops, ocorreu um erro. Verifique o saldo em sua carteira e tente novamente."
+    id: success ? transactionId : null,
+    success,
+    info: success ? "Transação realizada com sucesso." : "Ops, ocorreu um erro. Verifique o saldo em sua carteira e tente novamente."
   };
 };
 

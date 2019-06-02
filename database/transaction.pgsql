@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE OR REPLACE PROCEDURE create_transaction(_origin UUID, _destination UUID, _amount BIGINT)
+CREATE OR REPLACE PROCEDURE create_transaction(_origin UUID, _destination UUID, _amount BIGINT, _transactionId UUID)
 LANGUAGE plpgsql
 AS $$
 	DECLARE 
@@ -50,8 +50,7 @@ AS $$
 
 		INSERT INTO ligapay$develop."Transaction"
 			(id, "createdAt", "updatedAt", amount, wallet_destination_id, wallet_origin_id) values 
-			(uuid_generate_v4(), transaction_timestamp, transaction_timestamp, _amount, _destination, _origin);
-
+			(_transactionId, transaction_timestamp, transaction_timestamp, _amount, _destination, _origin);
 		COMMIT;
 	END;
 $$;

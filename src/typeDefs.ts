@@ -152,6 +152,8 @@ type TransactionPayload {
   success: Boolean!
   """ Informação adicional sobre a transação. """
   info: String!
+  """ Id da transação que foi realizada. """
+  id: UUID
 }
 
 type AuthPayload {

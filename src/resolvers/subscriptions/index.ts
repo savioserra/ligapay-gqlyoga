@@ -1,11 +1,16 @@
+import { pubsub } from "../../index";
+
+let count = 0;
+const channel = "teste";
+
+setInterval(() => {
+  pubsub.publish(channel, count);
+  count = count + 1;
+}, 2000);
+
 export default {
   count: {
     subscribe: async (root, args, { pubsub }) => {
-      const channel = "teste";
-      let count = 0;
-
-      setInterval(() => pubsub.publish(channel, count++ ), 5000);
-
       return pubsub.asyncIterator(channel);
     },
 
