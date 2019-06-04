@@ -1,6 +1,7 @@
 import { verify } from "jsonwebtoken";
 
 export const appSecret = process.env.APP_SECRET;
+export const apiKey = process.env.API_KEY;
 
 interface Token {
   userId: string;

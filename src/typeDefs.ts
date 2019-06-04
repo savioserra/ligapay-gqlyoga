@@ -8,6 +8,7 @@ type User {
 
   team: Team!
   wallet: Wallet!
+  cards: [Card!]!
 
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -162,12 +163,38 @@ type AuthPayload {
   user: User
 }
 
+type CreateCardPayload {
+  success: Boolean!
+  cardId: UUID
+  info: String!
+}
+
 type Mutation {
   """ Cria uma transação financeira entre duas carteiras. """
   createTransaction(origin: UUID!, destination: UUID!, amount: Int!): TransactionPayload!
 
   """ Cria um novo usuário caso não exista usando a Api do Cartola ou loga caso contrário. """
   login(email: String!, password: String!): AuthPayload!
+
+  """ Cria um cartão associado ao usuário logado. """
+  createCard(card: CreateCardInput): CreateCardPayload!
+}
+
+input CreateCardInput {
+  cardNumber: String!
+  cardExpirationDate: String!
+  cardHolderName: String!
+  cardCvv: String!
+}
+
+type Card {
+  id: UUID!
+  brand: String!
+  holderName: String!
+  firstDigits: String!
+  lastDigits: String!
+  valid: Boolean!
+  expirationDate: String!
 }
 
 type Subscription {

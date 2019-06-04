@@ -1,8 +1,16 @@
 import uuid = require("uuid/v4");
+import PagarMe from "../../api/pagarme";
 import { Resolver } from "../../typings";
+import { getUserId } from "../../utils";
 
 interface TransactionPayload {
   success: boolean;
+  info: string;
+}
+
+interface CreateCardPayload {
+  success: boolean;
+  cardId?: string;
   info: string;
 }
 
@@ -39,6 +47,29 @@ const createTransaction: Resolver<TransactionPayload> = async (root, args, { pri
   };
 };
 
+const createCard: Resolver<CreateCardPayload> = async (root, { card }, ctx) => {
+  const id = getUserId(ctx);
+
+  const cardCreate = await PagarMe.createCard(card);
+
+  if (!cardCreate.valid) {
+    return {
+      cardId: null,
+      success: false,
+      info: "Cartão informado é inválido."
+    };
+  }
+
+  const persistedCard = await ctx.prisma.mutation.createCard({ data: { ...cardCreate, user: { connect: { id } } } });
+
+  return {
+    cardId: persistedCard.id,
+    success: true,
+    info: "Cartão cadastrado com sucesso."
+  }
+};
+
 export default {
-  createTransaction
+  createTransaction,
+  createCard
 };

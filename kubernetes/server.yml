@@ -10,14 +10,15 @@ metadata:
   namespace: ligapay
 data:
    NODE_ENV: "development"
-   PRISMA_SERVER_ENDPOINT: "http://prisma-service:4000"
+   PRISMA_SERVER_ENDPOINT: "http://prisma-service.prisma.svc.cluster.local"
    APP_NAME: "ligapay"
    STAGE: "develop"
    APP_SECRET: "localsecret"
    PORT: "4000"
-   DEBUG: "true"
-   TRACING: "true"
+   DEBUG: "false"
+   TRACING: "false"
    PRISMA_MANAGEMENT_API_SECRET: "asecret"
+   API_KEY: "ak_test_ueE8AGj1gvONbJ7BzFRRj3p7wp7Htd"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -79,6 +80,11 @@ spec:
             valueFrom:
               configMapKeyRef:
                 key: PRISMA_MANAGEMENT_API_SECRET
+                name: ligapay-backend-config
+          - name: API_KEY
+            valueFrom:
+              configMapKeyRef:
+                key: API_KEY
                 name: ligapay-backend-config
 ---
 apiVersion: v1

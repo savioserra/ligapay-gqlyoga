@@ -47,5 +47,6 @@ const rules = {
 };
 
 export const Mutation = {
-  createTransaction: rules.canTransferFunds
+  createTransaction: rules.canTransferFunds,
+  createCard: rules.isAuthenticatedUser
 };

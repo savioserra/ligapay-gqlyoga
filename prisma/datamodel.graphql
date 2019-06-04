@@ -10,6 +10,8 @@ type User {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   deleted: Boolean! @default(value: false)
+
+  cards: [Card!]!
 }
 
 type League {
@@ -130,4 +132,18 @@ type LeagueEnrollment {
 
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+}
+
+type Card {
+  id: UUID! @id @unique
+  pagarmeId: String!
+  brand: String!
+  holderName: String!
+  firstDigits: String!
+  lastDigits: String!
+  fingerprint: String!
+  valid: Boolean!
+  expirationDate: String!
+
+  user: User! @db(name: "user_id")
 }
