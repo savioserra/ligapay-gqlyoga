@@ -1,5 +1,5 @@
 # source: http://prisma:4466/ligapay/develop
-# timestamp: Tue Jun 04 2019 15:35:17 GMT+0000 (Coordinated Universal Time)
+# timestamp: Wed Jun 05 2019 16:49:46 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCard {
   count: Int!
@@ -3271,6 +3271,7 @@ type Subscription {
 type Team {
   id: UUID!
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3295,6 +3296,7 @@ type TeamConnection {
 input TeamCreateInput {
   id: UUID
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3322,6 +3324,7 @@ input TeamCreateOneWithoutScoresInput {
 input TeamCreateWithoutEnrollmentsInput {
   id: UUID
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3333,6 +3336,7 @@ input TeamCreateWithoutEnrollmentsInput {
 input TeamCreateWithoutOwnerInput {
   id: UUID
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3344,6 +3348,7 @@ input TeamCreateWithoutOwnerInput {
 input TeamCreateWithoutScoresInput {
   id: UUID
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3694,6 +3699,8 @@ enum TeamOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  cartolaId_ASC
+  cartolaId_DESC
   cartolaName_ASC
   cartolaName_DESC
   cartolaSlug_ASC
@@ -3711,6 +3718,7 @@ enum TeamOrderByInput {
 type TeamPreviousValues {
   id: UUID!
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3758,6 +3766,7 @@ input TeamSubscriptionWhereInput {
 
 input TeamUpdateInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3769,6 +3778,7 @@ input TeamUpdateInput {
 
 input TeamUpdateManyMutationInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3798,6 +3808,7 @@ input TeamUpdateOneRequiredWithoutScoresInput {
 
 input TeamUpdateWithoutEnrollmentsDataInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3808,6 +3819,7 @@ input TeamUpdateWithoutEnrollmentsDataInput {
 
 input TeamUpdateWithoutOwnerDataInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3818,6 +3830,7 @@ input TeamUpdateWithoutOwnerDataInput {
 
 input TeamUpdateWithoutScoresDataInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3900,6 +3913,46 @@ input TeamWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  cartolaId: String
+
+  """All values that are not equal to given value."""
+  cartolaId_not: String
+
+  """All values that are contained in given list."""
+  cartolaId_in: [String!]
+
+  """All values that are not contained in given list."""
+  cartolaId_not_in: [String!]
+
+  """All values less than the given value."""
+  cartolaId_lt: String
+
+  """All values less than or equal the given value."""
+  cartolaId_lte: String
+
+  """All values greater than the given value."""
+  cartolaId_gt: String
+
+  """All values greater than or equal the given value."""
+  cartolaId_gte: String
+
+  """All values containing the given string."""
+  cartolaId_contains: String
+
+  """All values not containing the given string."""
+  cartolaId_not_contains: String
+
+  """All values starting with the given string."""
+  cartolaId_starts_with: String
+
+  """All values not starting with the given string."""
+  cartolaId_not_starts_with: String
+
+  """All values ending with the given string."""
+  cartolaId_ends_with: String
+
+  """All values not ending with the given string."""
+  cartolaId_not_ends_with: String
   cartolaName: String
 
   """All values that are not equal to given value."""

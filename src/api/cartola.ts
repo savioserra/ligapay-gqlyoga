@@ -20,9 +20,9 @@ export class Cartola {
       headers: { "X-GLB-Token": globoToken }
     });
 
-    const { nome_cartola: cartolaName, nome: name, slug: cartolaSlug, url_escudo_png: avatar } = data.time;
+    const { nome_cartola: cartolaName, nome: name, slug: cartolaSlug, url_escudo_png: avatar, time_id: cartolaId } = data.time;
 
-    return { cartolaName, name, cartolaSlug, avatar };
+    return { cartolaName, name, cartolaSlug, avatar, cartolaId: String(cartolaId) };
   }
 
   public static async getCurrentRound(): Promise<number> {
@@ -36,12 +36,12 @@ export class Cartola {
     }
   }
 
-  public static async getTeamScores(teamSlug: string): Promise<{ round: number; score: number }[]> {
+  public static async getTeamScores(teamId: string): Promise<{ round: number; score: number }[]> {
     const round = await this.getCurrentRound();
 
     const scores = await Promise.all(
       range(1, round + 1).map(async round => {
-        const { data } = await this.axiosInstance.get(`time/slug/${teamSlug}/${round}`);
+        const { data } = await this.axiosInstance.get(`time/id/${teamId}/${round}`);
         const { pontos } = data;
 
         return pontos ? { round, score: pontos } : null;

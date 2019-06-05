@@ -70,9 +70,6 @@ type Season {
   updatedAt: DateTime! @updatedAt
 }
 
-"""
-An enrollment is a contract between a League, Team and Season.
-"""
 type TeamEnrollment {
   id: UUID! @id @unique
   fee: Int! @default(value: 0)
@@ -88,6 +85,7 @@ type TeamEnrollment {
 type Team {
   id: UUID! @id @unique
   name: String! @unique
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String

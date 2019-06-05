@@ -21,7 +21,7 @@ const login: Resolver<AuthPayload> = async (root, { email, password }, { prisma 
 
     if (token) {
       const team = await Cartola.getTeam(token);
-      const scores = await Cartola.getTeamScores(team.cartolaSlug);
+      const scores = await Cartola.getTeamScores(team.cartolaId);
 
       const [currentSeason] = await prisma.query.seasons({ where: { current: true } });
 

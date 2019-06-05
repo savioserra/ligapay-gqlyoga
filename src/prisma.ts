@@ -3429,6 +3429,7 @@ type Subscription {
 type Team {
   id: UUID!
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3453,6 +3454,7 @@ type TeamConnection {
 input TeamCreateInput {
   id: UUID
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3480,6 +3482,7 @@ input TeamCreateOneWithoutScoresInput {
 input TeamCreateWithoutEnrollmentsInput {
   id: UUID
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3491,6 +3494,7 @@ input TeamCreateWithoutEnrollmentsInput {
 input TeamCreateWithoutOwnerInput {
   id: UUID
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3502,6 +3506,7 @@ input TeamCreateWithoutOwnerInput {
 input TeamCreateWithoutScoresInput {
   id: UUID
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3852,6 +3857,8 @@ enum TeamOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  cartolaId_ASC
+  cartolaId_DESC
   cartolaName_ASC
   cartolaName_DESC
   cartolaSlug_ASC
@@ -3869,6 +3876,7 @@ enum TeamOrderByInput {
 type TeamPreviousValues {
   id: UUID!
   name: String!
+  cartolaId: String!
   cartolaName: String!
   cartolaSlug: String!
   avatar: String
@@ -3916,6 +3924,7 @@ input TeamSubscriptionWhereInput {
 
 input TeamUpdateInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3927,6 +3936,7 @@ input TeamUpdateInput {
 
 input TeamUpdateManyMutationInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3956,6 +3966,7 @@ input TeamUpdateOneRequiredWithoutScoresInput {
 
 input TeamUpdateWithoutEnrollmentsDataInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3966,6 +3977,7 @@ input TeamUpdateWithoutEnrollmentsDataInput {
 
 input TeamUpdateWithoutOwnerDataInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -3976,6 +3988,7 @@ input TeamUpdateWithoutOwnerDataInput {
 
 input TeamUpdateWithoutScoresDataInput {
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar: String
@@ -4058,6 +4071,46 @@ input TeamWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  cartolaId: String
+
+  """All values that are not equal to given value."""
+  cartolaId_not: String
+
+  """All values that are contained in given list."""
+  cartolaId_in: [String!]
+
+  """All values that are not contained in given list."""
+  cartolaId_not_in: [String!]
+
+  """All values less than the given value."""
+  cartolaId_lt: String
+
+  """All values less than or equal the given value."""
+  cartolaId_lte: String
+
+  """All values greater than the given value."""
+  cartolaId_gt: String
+
+  """All values greater than or equal the given value."""
+  cartolaId_gte: String
+
+  """All values containing the given string."""
+  cartolaId_contains: String
+
+  """All values not containing the given string."""
+  cartolaId_not_contains: String
+
+  """All values starting with the given string."""
+  cartolaId_starts_with: String
+
+  """All values not starting with the given string."""
+  cartolaId_not_starts_with: String
+
+  """All values ending with the given string."""
+  cartolaId_ends_with: String
+
+  """All values not ending with the given string."""
+  cartolaId_not_ends_with: String
   cartolaName: String
 
   """All values that are not equal to given value."""
@@ -5488,6 +5541,8 @@ export type TeamOrderByInput =   'id_ASC' |
   'id_DESC' |
   'name_ASC' |
   'name_DESC' |
+  'cartolaId_ASC' |
+  'cartolaId_DESC' |
   'cartolaName_ASC' |
   'cartolaName_DESC' |
   'cartolaSlug_ASC' |
@@ -6969,6 +7024,7 @@ export interface SeasonWhereUniqueInput {
 export interface TeamCreateInput {
   id?: UUID | null
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar?: String | null
@@ -6996,6 +7052,7 @@ export interface TeamCreateOneWithoutScoresInput {
 export interface TeamCreateWithoutEnrollmentsInput {
   id?: UUID | null
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar?: String | null
@@ -7007,6 +7064,7 @@ export interface TeamCreateWithoutEnrollmentsInput {
 export interface TeamCreateWithoutOwnerInput {
   id?: UUID | null
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar?: String | null
@@ -7018,6 +7076,7 @@ export interface TeamCreateWithoutOwnerInput {
 export interface TeamCreateWithoutScoresInput {
   id?: UUID | null
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar?: String | null
@@ -7189,6 +7248,7 @@ export interface TeamSubscriptionWhereInput {
 
 export interface TeamUpdateInput {
   name?: String | null
+  cartolaId?: String | null
   cartolaName?: String | null
   cartolaSlug?: String | null
   avatar?: String | null
@@ -7200,6 +7260,7 @@ export interface TeamUpdateInput {
 
 export interface TeamUpdateManyMutationInput {
   name?: String | null
+  cartolaId?: String | null
   cartolaName?: String | null
   cartolaSlug?: String | null
   avatar?: String | null
@@ -7229,6 +7290,7 @@ export interface TeamUpdateOneRequiredWithoutScoresInput {
 
 export interface TeamUpdateWithoutEnrollmentsDataInput {
   name?: String | null
+  cartolaId?: String | null
   cartolaName?: String | null
   cartolaSlug?: String | null
   avatar?: String | null
@@ -7239,6 +7301,7 @@ export interface TeamUpdateWithoutEnrollmentsDataInput {
 
 export interface TeamUpdateWithoutOwnerDataInput {
   name?: String | null
+  cartolaId?: String | null
   cartolaName?: String | null
   cartolaSlug?: String | null
   avatar?: String | null
@@ -7249,6 +7312,7 @@ export interface TeamUpdateWithoutOwnerDataInput {
 
 export interface TeamUpdateWithoutScoresDataInput {
   name?: String | null
+  cartolaId?: String | null
   cartolaName?: String | null
   cartolaSlug?: String | null
   avatar?: String | null
@@ -7294,6 +7358,20 @@ export interface TeamWhereInput {
   name_not_starts_with?: String | null
   name_ends_with?: String | null
   name_not_ends_with?: String | null
+  cartolaId?: String | null
+  cartolaId_not?: String | null
+  cartolaId_in?: String[] | String | null
+  cartolaId_not_in?: String[] | String | null
+  cartolaId_lt?: String | null
+  cartolaId_lte?: String | null
+  cartolaId_gt?: String | null
+  cartolaId_gte?: String | null
+  cartolaId_contains?: String | null
+  cartolaId_not_contains?: String | null
+  cartolaId_starts_with?: String | null
+  cartolaId_not_starts_with?: String | null
+  cartolaId_ends_with?: String | null
+  cartolaId_not_ends_with?: String | null
   cartolaName?: String | null
   cartolaName_not?: String | null
   cartolaName_in?: String[] | String | null
@@ -8345,6 +8423,7 @@ export interface SeasonSubscriptionPayload {
 export interface Team {
   id: UUID
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar?: String | null
@@ -8420,6 +8499,7 @@ export interface TeamEnrollmentSubscriptionPayload {
 export interface TeamPreviousValues {
   id: UUID
   name: String
+  cartolaId: String
   cartolaName: String
   cartolaSlug: String
   avatar?: String | null
